@@ -1,22 +1,36 @@
+require('dotenv').config();
+const express = require('express');
+const morgan = require('morgan');
+const { connectDB } = require('./connection/mongo');
 
-const express = require("express"),
-      cors = require("cors");
-const routes = require("./routes/v2");
+const patientRoutes = require('./routes/v2/patient');
+const doctorRoutes = require('./routes/v2/doctor');
+const staffRoutes = require('./routes/v2/staff');
+const appointmentRoutes = require('./routes/v2/appointment');
+const billingRoutes = require('./routes/v2/billing');
+const pharmacyRoutes = require('./routes/v2/pharmacy');
+const authRoutes = require('./routes/v2/auth');
+
 const app = express();
-const PORT = 8080
-app.use(cors());
-app.use((_, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    return next();
+
+connectDB();
+
+app.use(morgan('dev'));
+app.use(express.json());
+
+// Routes
+app.use('/api/v2/auth', authRoutes);
+app.use('/api/v2/patients', patientRoutes);
+app.use('/api/v2/doctors', doctorRoutes);
+app.use('/api/v2/staff', staffRoutes);
+app.use('/api/v2/appointments', appointmentRoutes);
+app.use('/api/v2/billing', billingRoutes);
+app.use('/api/v2/pharmacy', pharmacyRoutes);
+
+// Default route
+app.get('/', (req, res) => {
+  res.send('Hospital Management API - v2');
 });
 
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use(require('./utils/morgan'));
-
-app.use("/", [routes]);
-app.listen(PORT, ()=> console.log("Server running on port: http://localhost:" + PORT));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

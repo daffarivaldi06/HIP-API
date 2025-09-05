@@ -1,19 +1,23 @@
-const { Base } = require("./base");
-const { BaseRead } = require("./base-read");
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-class UserWrite extends Base {
-  static get tableName() {
-    return "visidata.users";
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ['doctor', 'nurse', 'admin'], required: true },
+  refId: { type: mongoose.Schema.Types.ObjectId, required: true }, // link to Doctor or Staff collection
+}, { timestamps: true });
+
+userSchema.pre('save', async function(next) {
+  if(!this.isModified('password')) {
+    return next();
   }
-}
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
 
-class UserRead extends BaseRead {
-  static get tableName() {
-    return "visidata.users";
-  }
-}
-
-module.exports = {
-  UserWrite,
-  UserRead,
+userSchema.methods.matchPassword = function(password) {
+  return bcrypt.compare(password, this.password);
 };
+
+module.exports = mongoose.model('User', userSchema);
