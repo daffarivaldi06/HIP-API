@@ -15,12 +15,10 @@ Designed to improve **efficiency, accuracy, and scalability** for modern hospita
 ---
 
 ## 🛠️ Tech Stack
-- **Backend:** Node.js (Express.js) / TypeScript
-- **Frontend:** Angular / PHP CodeIgniter (hospital staff dashboards)
-- **Database:** MySQL / PostgreSQL
-- **Auth:** JWT & Role-Based Access
+- **Backend:** Node.js (Express.js) 
+- **Database:** MongoDB
 - **Deployment:** Docker, Kubernetes
-- **Testing:** Jest / Mocha
+- **Testing:** Postman
 
 ---
 
