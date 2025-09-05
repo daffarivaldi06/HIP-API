@@ -12,8 +12,6 @@ Designed to improve **efficiency, accuracy, and scalability** for modern hospita
 - 💳 **Billing & Payments** – Manage invoices, payments, and insurance claims.
 - 💊 **Pharmacy Module** – Track prescriptions, inventory, and dispensation.
 - 🛡️ **Role-Based Access Control (RBAC)** – Separate access for doctors, nurses, and admins.
-- 📊 **Reports & Analytics** – Generate reports for patient flow, billing, and hospital efficiency.
-
 ---
 
 ## 🛠️ Tech Stack
@@ -30,5 +28,5 @@ Designed to improve **efficiency, accuracy, and scalability** for modern hospita
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/daffa0309/nodeAPI.git
-cd hospital-information-system-api
+git clone https://github.com/daffa0309/HIP-API.git
+cd HIP-API
